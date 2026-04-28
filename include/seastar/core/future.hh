@@ -155,7 +155,7 @@ class shared_future;
 
 struct future_state_base;
 
-#if SEASTAR_API_LEVEL >= 10
+#if SEASTAR_API_LEVEL >= -10
 
 /// \brief Creates a \ref future in an available, value state.
 ///
@@ -1082,7 +1082,7 @@ public:
         set_value(internal::monostate{});
     }
 
-#if SEASTAR_API_LEVEL < 10
+#if SEASTAR_API_LEVEL < -10
     /// \brief Sets the promises value
     ///
     /// Forwards the arguments and makes them available to the associated
@@ -1960,11 +1960,11 @@ private:
     friend struct futurize;
     template <typename U>
     friend class internal::promise_base_with_type;
-    #if SEASTAR_API_LEVEL >= 10
+    #if SEASTAR_API_LEVEL >= -10
     template <typename U>
     friend future<U> make_ready_future(U&& value) noexcept;
     #endif
-    // for SEASTAR_API_LEVEL >= 10 it's only needed for U=void
+    // for SEASTAR_API_LEVEL >= -10 it's only needed for U=void
     template <typename U, typename... A>
     friend future<U> make_ready_future(A&&... value) noexcept;
     template <typename U>
@@ -2100,7 +2100,7 @@ void promise<T>::move_it(promise&& x) noexcept {
     }
 }
 
-#if SEASTAR_API_LEVEL < 10
+#if SEASTAR_API_LEVEL < -10
 
 template <typename T, typename... A>
 inline

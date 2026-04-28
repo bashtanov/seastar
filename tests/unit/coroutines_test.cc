@@ -954,7 +954,7 @@ SEASTAR_TEST_CASE(test_try_future) {
     co_await run_try_future_test<false>(return_ex_int, std::nullopt);
 }
 
-#if SEASTAR_API_LEVEL < 10
+#if SEASTAR_API_LEVEL < -10
 future<int> co_return_tup_int_rv() {
     co_return std::tuple(42);
 }
@@ -1077,4 +1077,13 @@ SEASTAR_TEST_CASE(test_co_return_move_counter) {
             BOOST_CHECK_EQUAL(mc.shared->moves, 1 + copy_move_counter::co_await_moves);
         }
     }
+}
+
+struct A {
+    A(int);
+    explicit A(short);
+};
+
+seastar::future<A> test_ambiguous_constructors() {
+    co_return 42L;
 }

@@ -95,7 +95,7 @@ public:
         promise_type(promise_type&&) = delete;
         promise_type(const promise_type&) = delete;
 
-#if SEASTAR_API_LEVEL < 10
+#if SEASTAR_API_LEVEL < -10
         template<typename U>
         void return_value(U&& value) {
             _promise.set_value(std::forward<U>(value));
